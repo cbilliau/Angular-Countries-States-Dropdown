@@ -1,0 +1,71 @@
+<div class="container">
+  <div>
+    <div class="mt-6">
+      <div >Property Details</div>
+      <form  [formGroup]="propertyForm">
+        <mat-form-field class="w-100">
+          <input matInput id="companyname" formControlName="companyName" placeholder="Company Name" />
+          <mat-error *ngIf="propertyForm.controls.companyName.errors?.required && propertyForm.controls.companyName.touched"
+            >Required field</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <input matInput id="propertyname" formControlName="propertyName" placeholder="Property Name" />
+          <mat-error *ngIf="propertyForm.controls.propertyName.errors?.required && propertyForm.controls.propertyName.touched"
+            >Required field</mat-error
+          >
+        </mat-form-field>
+
+        <ng-container formGroupName="address">
+          <mat-form-field class="w-100">
+            <input matInput id="line1" formControlName="line1" placeholder="Address (line 1)" />
+            <mat-error *ngIf="propertyForm.get('address.line1').errors?.required && propertyForm.get('address.line1').touched"
+              >Required field</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field class="w-100"> <input matInput id="line2" formControlName="line2" placeholder="Address (line 2)" /> </mat-form-field>
+
+          <mat-form-field class="w-100"> <input matInput id="line3" formControlName="line3" placeholder="Address (line 3)" /> </mat-form-field>
+          <table class="w-100" cellspacing="0">
+            <td>
+              <mat-form-field class="w-100">
+                <mat-select id="country" formControlName="country" placeholder="Country" (change)="onSelect($event.target.value)">
+                  <mat-option value="0">Select</mat-option>
+                  <mat-option *ngFor="let country of countries" value="{{ country.id }}">{{ country.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="w-100">
+                <mat-select id="state" formControlName="state" placeholder="State">
+                  <mat-option *ngIf="selectedCountry.id == 0" value="0">Select</mat-option>
+                  <mat-option *ngFor="let state of states" value="{{ state.id }}">{{ state.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </table>
+          <table class="w-100" cellspacing="0">
+            <td>
+              <mat-form-field class="w-100">
+                <input matInput id="city" formControlName="city" placeholder="City" />
+                <mat-error *ngIf="propertyForm.get('address.city').errors?.required && propertyForm.get('address.city').touched"
+                  >Required field</mat-error
+                >
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="w-100">
+                <input matInput id="postalCode" formControlName="postalCode" placeholder="Postal Code" />
+                <mat-error *ngIf="propertyForm.get('address.postalCode').errors?.required && propertyForm.get('address.postalCode').touched"
+                  >Required field</mat-error
+                >
+              </mat-form-field>
+            </td>
+          </table>
+        </ng-container>
+      </form>
+      <div class="flt-rt"><button mat-raised-button color="primary" [disabled]="!propertyForm.valid" (click)="nextStep()">NEXT</button></div>
+    </div>
+  </div>
+</div>
